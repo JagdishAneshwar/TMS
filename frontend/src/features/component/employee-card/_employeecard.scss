@@ -1,0 +1,25 @@
+@use "../../../variables" as *;
+
+
+.employee-info-card{
+    width: 100%;
+    height: 150px;
+    margin-bottom: 8px;
+    .employee-img{
+        width: 15%;
+        height: auto;
+        display: block;
+    }
+    .info-wrapper{
+        width: 85%;
+        margin-left: 12px;
+        margin-right: 12px;
+        .employee-name-role{
+            width: 28.33%;
+        }
+
+        .age-gender{
+            width: 28.33%;
+        }
+    }
+}

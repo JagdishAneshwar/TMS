@@ -1,0 +1,25 @@
+{
+  "name": "vesa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm i",
+    "dev": "node index.js"
+  },
+  "author": "Jagdish Aneshwar",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "bcryptjs": "^2.4.3",
+    "connect-history-api-fallback": "^2.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.12.5",
+    "node-cron": "^3.0.3",
+    "request": "^2.88.2"
+  }
+}

@@ -1,0 +1,55 @@
+@use "../../variables" as *;
+
+.home {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  font-size: $heading3;
+  padding: 2%;
+  .navbar {
+    min-height: 50px;
+    background: $tertiary;
+    color: white !important;
+    padding: 0;
+    text-align: center;
+
+    .logout-btn>img{
+      width: 30px;
+      height: 30px;
+    }
+    .login-btn>img{
+      width: 30px;
+      height: 30px;
+    }
+
+
+    .nav{
+        height: 50px;
+        width: 100%;
+        border: solid $secondary 1px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      margin: 0;
+      padding: 0;
+      color: white;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      &:hover {
+        background: white;
+        color: black;
+      }
+    }
+
+    ul {
+        width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0;
+    }
+  }
+}

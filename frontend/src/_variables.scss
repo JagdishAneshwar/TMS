@@ -1,0 +1,31 @@
+
+//font-family
+$font: hatolie, serif;
+
+// Colors
+$primary: hsl(232, 30%, 40%);
+$secondary:hsl(235, 33%, 27%);
+$tertiary: rgb(17, 19, 44);
+
+$light: hsl(0, 0%, 100%);
+$grey: hsl(0, 0%, 90%);
+
+
+//font-sizes
+$brand-name: calc(0.7rem + 3vw);
+$nav-link: calc(0.7rem + 1vw);
+$centerLogo: calc(0.7rem + 14vw);
+$heading1: calc(1.3rem + 1vw);
+$heading2: calc(0.9rem + 1vw);
+$heading2_3: calc(0.4rem + 1vw);
+$heading3: calc(0.4rem + 0.7vw);
+$description: calc(0.3rem + 1vw);
+$small: calc(0.3rem + 1vw);
+$medium: calc(0.7rem + 1vw);
+
+//font-weight
+$regular: 400;
+$bold: 700;
+
+//paragraph-size
+$paraSize: 55ch;

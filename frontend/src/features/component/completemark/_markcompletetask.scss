@@ -1,0 +1,31 @@
+@use "../../../variables" as *;
+
+
+.task-complete-marking{
+    width: 100%;
+    height: 45px;
+    color: $light;
+    background: linear-gradient(180deg, rgba(33,36,70,1) 0%, rgba(33,36,70,1) 92%, rgba(33,36,70,0.7091211484593838) 97%);
+    .project-title{
+        width: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .project-progression{
+
+        width: 60%;
+    }
+    .danger{
+        color: #ff6384;
+      }
+      .warning{
+        color: #ffe863;
+      }
+      .primary{
+        color: #81d7b5;
+      }
+      .grey{
+        color: #ffffff;
+      }
+}

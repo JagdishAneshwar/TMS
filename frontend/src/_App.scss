@@ -1,0 +1,14 @@
+@use "./variables" as *;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body{
+    background: linear-gradient(114deg, rgba(71,77,132,1) 0%, rgba(17,19,45,1) 78%);
+  }
+  
+
+
