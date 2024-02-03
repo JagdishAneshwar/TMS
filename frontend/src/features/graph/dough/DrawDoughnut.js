@@ -22,6 +22,8 @@ const DrawDoughnut = ({ title, align, position, titpos, titalgn, values, label }
     ],
   };
 
+  
+
   const options = {
     plugins: {
       legend: {

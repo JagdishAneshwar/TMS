@@ -30,25 +30,13 @@
         // Log the current date
 
 
-       const formatDate = (date) => {
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear();
       
-        return `${day}-${month}-${year}`;
-      };
-      
-      const parseDate = (dateString) => {
-        const [day, month, year] = dateString.split('-').map(Number);
-        return new Date(year, month - 1, day); // Month is 0-based in JavaScript Date object
-      };
+
       
       const overdueCalculator = (due_date) => {
         const currentDate = new Date();
-        const formattedCurrentDate = formatDate(currentDate);
+        const dueDate = new Date(due_date);
       
-        const dueDate = parseDate(due_date);
-        
         if (isNaN(dueDate.getTime())) {
           console.error('Invalid due date format');
           return null;
@@ -57,19 +45,13 @@
         // Calculate the time difference in milliseconds
         const timeDifference = dueDate.getTime() - currentDate.getTime();
       
-        // Take the absolute value of timeDifference
-        const absoluteTimeDifference = timeDifference;
-      
         // Convert milliseconds to hours
-        const hoursDifference = absoluteTimeDifference / (1000 * 60 * 60);
+        const hoursDifference = Math.floor(timeDifference / (3600000));
       
-        return { hoursDifference, formattedCurrentDate };
+        return { hoursDifference, currentDate: currentDate.toLocaleString(), dueDate: dueDate.toLocaleString() };
       };
-      
-      // Example usage
-      const duedate = '21-01-2024';
-      const result = overdueCalculator(duedate);
 
+      
       
       
       
@@ -89,9 +71,18 @@ const onClickRemoveTask = () => {
   //    const member = employees.find((employee) => employee._id.toString() === id.toString());
   //    return member ? member.name : `Unknown Member ${id}`;
   //  };
+
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+  const dashboardWidth = viewportWidth < 1000 ? '100%' : '80%';
+  const dashboardMargin = viewportWidth < 1000 ? '0%' : '10%';
   
+  let dashboardStyle ={
+   width: dashboardWidth,
+   marginLeft: dashboardMargin
+  }
+
      return (
-     <div className='project-main' key={_id}>
+     <div className='project-main' key={_id} style={dashboardStyle}>
      <UpdateTask taskInfo={{ _id, title, description, spent, assigned, status, priority, start_date, due_date }} />
      <Link to="/dashboard"><h4 className="dashboard-title">Dashboard</h4></Link>
      <div className='info d-flex flex-row justify-content-around align-content-center p-3' >
@@ -112,7 +103,7 @@ const onClickRemoveTask = () => {
          <div className='spent'>Spent: {spent}</div>
          </div>
          <div className='date-info'>
-         {result.hoursDifference > 0 ? (<div className='start-date'>Delayed by: <span className='text-danger'>{ Math.abs(Math.round(result.hoursDifference))} Hrs</span></div>) : (<div className='start-date'>Hours of Work Left: <span className='text-success'>{ Math.abs(Math.round(result.hoursDifference))} Hrs</span></div>)}
+         {overdueCalculator(due_date).hoursDifference > 0 ? (<div className='start-date'>Delayed by: <span className='text-danger'>{Math.abs(Math.round(overdueCalculator(due_date).hoursDifference/24))} Days</span></div>) : (<div className='start-date'>Hours of Work Left: <span className='text-success'>{Math.abs(Math.round(overdueCalculator(due_date).hoursDifference/24))} Days</span></div>)}
          
          <div className='due-date'>Due Date: {due_date}</div>
          </div>

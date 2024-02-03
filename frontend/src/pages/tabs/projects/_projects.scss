@@ -2,16 +2,16 @@
 
 .projects{
     color: $light;
-    width: 100%;
+    width: 80%;
+    margin-left: 10%;
     height: 100vh;
-    padding: 7px;
+    
     .task-modal {
       color: #000;
     }
   .all-project-lists{
     color: black;
-    display: flex;
-    flex-wrap: wrap;
+    display: flex; flex-direction: row; align-items: center; justify-content: center;
     .project-card-overview{
         height: 30vh;
         width: 30vh;

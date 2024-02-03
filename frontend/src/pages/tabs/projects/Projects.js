@@ -56,9 +56,18 @@ const Projects = () => {
     label: employee.name
   }));
 
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+  const dashboardWidth = viewportWidth < 1000 ? '100%' : '80%';
+  const dashboardMargin = viewportWidth < 1000 ? '0%' : '10%';
+  
+  let dashboardStyle ={
+   width: dashboardWidth,
+   marginLeft: dashboardMargin
+  }
+
   
 return(
-    <div className='projects'>
+    <div className='projects' style={dashboardStyle}>
     
     <div class="task-modal modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -173,9 +182,13 @@ return(
     </div>
   </div>
    {/* main-part */}
-      <h1>Tasks </h1>
+      <h1>Tasks </h1><hr/><br/>
      <div class="all-project-lists row row-cols-2 row-cols-md-3">
-     
+     <div class=" project-card-overview">
+        <div class="project-overview">
+        <div alt="heelo" type="button" class="create-project-button" data-bs-toggle="modal" data-bs-target="#exampleModal"></div>
+        </div>
+      </div>
      {tasks && tasks.map((task)=>{
 
           return(
@@ -192,11 +205,7 @@ return(
                 start_date={task.start_date}
                 />)
         })}       
-      <div class=" project-card-overview">
-        <div class="project-overview">
-        <div alt="heelo" type="button" class="create-project-button" data-bs-toggle="modal" data-bs-target="#exampleModal"></div>
-        </div>
-      </div>
+
       </div>
       
     </div>

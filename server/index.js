@@ -13,10 +13,12 @@ app.use(cors());
 app.use("/api/auth", require("./src/routes/auth"));
 app.use("/api/user",require("./src/routes/user"));
 app.use("/api/task", require("./src/routes/tasks"));
-app.use("/api/location", require("./src/routes/location"));
+app.use("/api/leave", require("./src/routes/leave"));
 app.use("/api/attendance", require("./src/routes/attendance"));
+app.use("/api/event", require("./src/routes/event"));
 
 app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
 });
+
 

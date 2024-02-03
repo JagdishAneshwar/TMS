@@ -44,6 +44,12 @@ const taskSchema = new Schema({
     type: String,
     required: true,
   },
+  adminsaw:{
+    type:String
+  },
+  usersaw:{
+    type:String
+  },
 });
 
 module.exports = mongoose.model("task", taskSchema);

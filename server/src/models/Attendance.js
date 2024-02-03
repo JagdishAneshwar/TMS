@@ -6,17 +6,17 @@ const attendanceSchema = new Schema({
     type: String,
     required: true,
   },
-  attendance: {
+  name: {
     type: String,
+    required: true,
+  },
+  attendance: {
+    type: Number,
     required: true,
   },
   place: {
     type: String,
     required: true,
-  },
-  reason:{
-    type: String,
-    default: false
   },
   start_time: {
     type: String,

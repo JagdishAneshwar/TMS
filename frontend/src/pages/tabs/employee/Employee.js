@@ -38,25 +38,25 @@ const Employee = () => {
 
 
   
-  const [employee, setemployee] = useState({
-      name:"",
-      mobile:"",
-      email:"",
-      password:"",
-      passwordConfirmation:"",
-      dob:"",
-      doj:"",
-      ad:"",
-      role:"",
-      address:"",
-      pincode:"",
-      city:"",
-      code:"",
-      gender:"Male",
-      emp_type:"",
-      salary:""
+    const [employee, setemployee] = useState({
+        name:"",
+        mobile:"",
+        email:"",
+        password:"",
+        passwordConfirmation:"",
+        dob:"",
+        doj:"",
+        ad:"",
+        role:"",
+        address:"",
+        pincode:"",
+        city:"",
+        code:"",
+        gender:"Male",
+        emp_type:"",
+        salary:""
 
-  })
+    })
 
   const { password,
     passwordConfirmation,
@@ -245,9 +245,19 @@ const Employee = () => {
     
   };
 
+  const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+  const dashboardWidth = viewportWidth < 1000 ? '100%' : '80%';
+  const dashboardMargin = viewportWidth < 1000 ? '0%' : '10%';
+  
+  let dashboardStyle ={
+   width: dashboardWidth,
+   marginLeft: dashboardMargin
+  }
+
+
   return (
-    <div className="employee-section">
-      <h1>Employees</h1>
+    <div className="employee-section" style={dashboardStyle}>
+      <h1>Employees</h1><hr/><br/>
       <button type="button" class="btn btn-primary add-employee" data-bs-toggle="modal" data-bs-target="#addEmployee">Add New Employee</button>
       <div class="employee-modal modal fade" id="addEmployee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog ">
@@ -280,7 +290,7 @@ const Employee = () => {
     </div>
   </div>
   </div>
-      <div className="total-employee">Total Employee: 150</div>
+      <br/><br/><div className="total-employee">Total Employee: 150</div>
       <hr/>
       <div className="employee-lists d-flex flex-column">
 

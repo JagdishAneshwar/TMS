@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./_home.scss";
-import Profile from "../../features/component/circular-profile/Profile";
+import projectContext from '../../context/project/projectContext';
 import Dashboard from "../tabs/dashboard/Dashboard";
 import Projects from "../tabs/projects/Projects";
 import Employee from "../tabs/employee/Employee";
@@ -8,28 +8,44 @@ import Attendance from "../tabs/attendance/Attendance";
 import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const context = useContext(projectContext);
+  const { getLeaves, leaves, updateLeave } = context;
   const handleLogOut = () => {
     localStorage.removeItem("token");
     history("/login");
   };
+ 
+  const [notificationClicked, setNotificationClicked] = useState(false);
   let history = useNavigate();
   const code = localStorage.getItem("code");
 
-  let pillWidth;
-  switch(code){
-    case "2562":
-      pillWidth = '20%';
-      break
-    case "1000":
-      pillWidth = '30%';
-      break
-    default:
-      pillWidth = 'auto';
-  }
+  const notificationCount = code === "2562"
+  ? leaves.filter(leave => leave.adminsaw === "false")
+  : leaves.filter(leave => leave.usersaw === "false");
 
-  const pillStyle = {
-    width: `${pillWidth}`,
+  const getleaveCall= async()=>{
+    await getLeaves()
+  }
+  useEffect(() => {
+    const notificationClickedStored = localStorage.getItem("notificationClicked");
+    if (notificationClickedStored) {
+      setNotificationClicked(true);
+    }
+    getleaveCall()
+  }, []); 
+
+  const handleNotificationClick = async() => {
+    setNotificationClicked(true);
+    localStorage.setItem("notificationClicked", "true");
+    const leavesToUpdate = leaves.filter(leave => leave.adminsaw === "false").map(leave => leave._id);
+    updateLeave(leavesToUpdate)
   };
+
+  const pillWidth = code === "2562" ? '20%' : '25%';
+  const pillStyle = {
+    width: pillWidth,
+  };
+
   return (
     <section className="home">
       <nav className="navbar container navbar-expand-md fixed-bottom">
@@ -55,8 +71,9 @@ const Home = () => {
             </li>):null}
           
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show" style={pillStyle}>
-              <a className="nav-link" href="#link2" id="v-pills-attendance-tab" data-bs-toggle="pill" data-bs-target="#v-pills-attendance" type="button" role="tab" aria-controls="v-pills-attendance" aria-selected="false">
-                Attendance
+              <a className="nav-link position-relative" href="#link2" id="v-pills-attendance-tab" data-bs-toggle="pill"  onClick={handleNotificationClick} data-bs-target="#v-pills-attendance" type="button" role="tab" aria-controls="v-pills-attendance" aria-selected="false">
+                Attendance{notificationCount.length > 0 ? (
+                  <span className="badge bg-danger ms-3 fs-6 translate-middle rounded-pill" onClick={handleNotificationClick}>{notificationCount.length}</span>):null}
               </a>
             </li>
             <li className="logout-btn" data-toggle="collapse" data-target=".navbar-collapse.show">
@@ -81,5 +98,4 @@ const Home = () => {
     </section>
   );
 };
-
 export default Home;

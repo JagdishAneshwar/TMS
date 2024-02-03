@@ -5,8 +5,11 @@ import Project from "../../../features/component/project/Project";
 import AddTask from '../../../features/component/task-model/TaskModel';
 import Task from '../../../features/component/task-card/Task';
 import MarkCompleteTask from '../../../features/component/completemark/MarkCompleteTask';
+import Table from "./Table"
 import DrawDoughnut from "../../../features/graph/dough/DrawDoughnut";
 import "./_dashboard.scss";
+// import Table from './Table';
+
 const Dashboard = () => {
 
    const context = useContext(projectContext);
@@ -19,8 +22,6 @@ const Dashboard = () => {
    const user_name = localStorage.getItem("name");
    const code = localStorage.getItem("code");
 
-   const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-   const doughnutPosition = viewportWidth < 1000 ? 'bottom' : 'right';
 
 
     const task_not_started = tasks.filter((task) => {
@@ -85,15 +86,45 @@ const Dashboard = () => {
      var mm = targetDate.getMonth() + 1; // 0 is January, so we must add 1
      var yyyy = targetDate.getFullYear();
      var dateString = yyyy + "-" + mm + "-" + ("0"+dd).slice(-2);
-    
+     
+   const viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+   const doughnutPosition = viewportWidth < 1000 ? 'right' : 'bottom';
+   const doughnutWidth = viewportWidth < 1000 ? '100%' : '30%';
+   const doughnutHeight = viewportWidth < 1000 ?  '100%' : '30%';
+   let doughnutStyle ={
+    width: doughnutWidth,
+    height: doughnutHeight
+   }
+
+
+   const dashboardWidth = viewportWidth < 1000 ? '100%' : '80%';
+   const dashboardMargin = viewportWidth < 1000 ? '0%' : '10%';
+   
+   let dashboardStyle ={
+    width: dashboardWidth,
+    marginLeft: dashboardMargin
+   }
+
+   const tasksectionFlexDirection = viewportWidth < 1000 ? 'column-reverse' : 'row-reverse';
+   
+   let tasksectionStyle ={
+    flexDirection: tasksectionFlexDirection
+   }
+
+   
+   const taskscompletetableWidth = viewportWidth < 1000 ? '100%' : '70%';
+   
+   let taskscompletetableStyle ={
+    width: taskscompletetableWidth
+   }
 
 
    return (
-     <div className="dashboard">
+     <div className="dashboard" style={dashboardStyle}>
      <div className="heading-wrapper justify-content-between">
        <h4 className="dashboard-title">Dashboard</h4>
        <h5>Hello, {user_name} Welcome Back</h5>
-       </div>
+       </div><hr/><br/>
        <div className="d-flex flex-row task-section  justify-content-around align-items-center pt-3">
          <Card
            img={require(`../../../res/image/ongoing.png`)}
@@ -114,12 +145,13 @@ const Dashboard = () => {
            width={"30%"}
          />
        </div><br/><br/>
+        {/* <Table/> */}
        <h2>Task Progress</h2><hr/>
-       { task_complete.length > 0 || complete_length > 0 || incomplete_length > 0 ?(<div className="project-progress justify-content-around">
+       { task_complete.length > 0 || complete_length > 0 || incomplete_length > 0 ?(<div className="project-progress justify-content-around"  style={tasksectionStyle}>
        { code == "2562" ? (
-       <div className='task-complete-table '><h3>Review Completed Tasks</h3>
+       <div className='task-complete-table ' style={taskscompletetableStyle}><h3>Review Completed Tasks</h3>
        { task_complete.length > 0 ? ( 
-        <table className="table task-complete-table-main text-white table-striped table-hover mt-4" >
+        <table className="table task-complete-table-main text-white table-striped table-hover mt-4">
          <thead>
          <th className='pb-3'>Mark</th>
           <th className='pb-3'>Title</th>
@@ -143,7 +175,7 @@ const Dashboard = () => {
        </table>):(<p className='quotes'>Nothing to preview</p>)}
 </div>):(null)}
        {complete_length > 0 || incomplete_length > 0 ? ( 
-         <div className="doughnut-wrap">
+         <div className="doughnut-wrap" style={doughnutStyle}>
            <DrawDoughnut
              title=""
              position={doughnutPosition}
@@ -214,7 +246,9 @@ const Dashboard = () => {
                 {task_progress.map((task, i) => (
                   
               <Task key={i} task_id={task._id}  title={task.title} description={task.description} spent={task.spent} start_date={task.start_date} status={task.status} assigned={task.assigned} priority={task.priority} due_date={task.due_date} />
-            ))}
+            )) 
+            
+            }
 
                   
                 </div>):(<p className='quotes'>Nothing to preview</p>)   }
@@ -233,9 +267,12 @@ const Dashboard = () => {
               </div>
               </div>
               </div>):(<p className='quotes'>Nothing to preview</p>) }
+
+           
      </div>
    );
 };
 
 export default Dashboard;
+
 

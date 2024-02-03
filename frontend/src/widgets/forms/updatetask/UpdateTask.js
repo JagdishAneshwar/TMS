@@ -18,6 +18,16 @@ const UpdateTask = ({ taskInfo }) => {
     due_date: taskInfo.due_date,
   });
 
+  console.log(      task._id,
+    task.title,
+    task.description,
+    task.spent,
+    task.start_date,
+    task.status,
+    task.priority,
+    task.due_date)
+  console.log(task)
+
   const members = taskInfo.assigned
   const { updateTask, employees } = context;
   const refClose = useRef(null);
@@ -27,7 +37,7 @@ const UpdateTask = ({ taskInfo }) => {
   };
 
   const handleChange = (selectedOptions) => {
-    setSelectedValue(selectedOptions);
+    setSelectedValue(...[selectedOptions]);
   };
 
   const employeeOptions = employees
@@ -50,11 +60,14 @@ const UpdateTask = ({ taskInfo }) => {
       due_date: taskInfo.due_date,
     });
 
-    const initialSelectedOptions = taskInfo.assigned[0][0].assigned.map((assigned, index) => ({
+    if(taskInfo.assigned[0][0].assigned){
+    var initialSelectedOptions = taskInfo.assigned[0][0].assigned.map((assigned, index) => ({
       value: index,
       label: assigned,
-    }));
-console.log(initialSelectedOptions)
+    }));}else{
+      var initialSelectedOptions = ""
+    }
+
     // const selectedOptionsWithNames = initialSelectedOptions.map((option) => ({
     //   ...option,
     //   label: employees.find((employee) => employee._id.toString() === option.label.toString())?.name || option.label,
@@ -64,14 +77,6 @@ console.log(initialSelectedOptions)
   }, [taskInfo, employees, members]);
 
   const onClickUpdateTask = () => {
-    console.log( "function",     task.task_id,
-      task.title,
-      task.description,
-      task.spent,
-      task.start_date,
-      task.status,
-      task.priority,
-      task.due_date)
     updateTask(
       task.task_id,
       task.title,
@@ -82,6 +87,7 @@ console.log(initialSelectedOptions)
       task.priority,
       task.due_date
     );
+    console.log("hello")
   };
 
   return (

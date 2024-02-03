@@ -9,8 +9,8 @@ const ProjectState = (props) => {
   const [projecthistory, setprojecthistory] = useState(notesInitial);
   const [tasks, settask] = useState(notesInitial2);
   const [attendances, setAttendance] = useState(notesInitial3);
-  // const host = "https://project-management-application-ch9v.onrender.com";
-  const host = "http://192.168.1.5:5000"
+  const [leaves, setLeaves] = useState(notesInitial3);
+  const host = "http://localhost:5000"
   const notesInitialemp = [];
   const [employees, setemployees] = useState(notesInitialemp);
 
@@ -148,14 +148,12 @@ const ProjectState = (props) => {
   };
 
   const markDailyAttendance = async (
-    attendance, 
     reason, 
     start_time, 
     leave_time,
     date,
     latitude,
     longitude
-    
   ) => {
     const response = await fetch(`${host}/api/attendance/markDailyAttendance`, {
       method: "POST",
@@ -165,7 +163,6 @@ const ProjectState = (props) => {
         "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({
-        attendance, 
         reason, 
         start_time, 
         leave_time,
@@ -174,9 +171,55 @@ const ProjectState = (props) => {
         longitude,
       }),
     }); 
-    const task = await response.json();
-    setAttendance(task);
-    
+    const task = await response.json();  
+  };
+
+  const updateDailyAttendance = async (
+    id, 
+    leave_time
+  ) => {
+    console.log("state",
+    id, 
+    leave_time)
+    const response = await fetch(`${host}/api/attendance/updateDailyAttendance/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin':'*',
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({
+        leave_time
+      }),
+    }); 
+    const task = await response.json();  
+  };
+
+  const updateLeave = async (ids) => {
+    const response = await fetch(`${host}/api/leave/updateLeaveViewStatus`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin':'*',
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ids}),
+    }); 
+    const task = await response.json(); 
+  };
+
+  const updateLeaveApproval = async (id, status, comment) => {
+    const response = await fetch(`${host}/api/leave/updateLeaveApproval`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin':'*',
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({id, status, comment}),
+    }); 
+    const task = await response.json(); 
+
   };
 
   const getTasks = async () => {
@@ -194,6 +237,23 @@ const ProjectState = (props) => {
     );
     const json = await response.json();
     settask(json);
+  };
+
+  const getLeaves = async () => {
+    // API calls
+    const response = await fetch(
+      `${host}/api/leave/getAllLeaves`,
+      {
+        method: "GET",
+        headers: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin':'*',
+        "auth-token": localStorage.getItem("token"),
+        },
+      }
+    );
+    const json = await response.json();
+    setLeaves(json);
   };
 
 
@@ -332,6 +392,16 @@ const ProjectState = (props) => {
     due_date
   ) => {
 
+    console.log("first", {    task_id,
+      title,
+      description,
+      spent,
+      assigned,
+      status,
+      priority,
+      start_date,
+      due_date})
+
     const response = await fetch(`${host}/api/task/updateTask/${task_id}`, {
       method: "PUT",
       headers: {
@@ -388,15 +458,24 @@ const ProjectState = (props) => {
   };
   
 
-  const getLocationName = async (latitude, longitude) =>{
-    const response = await fetch(`http://localhost:5000/api/location/getPlaceName?lat=${latitude}&lon=${longitude}`, {
-      method: "GET",
+  const requestLeave = async (    
+    leavereason,     
+    from,    
+    to) =>{
+
+    const response = await fetch(`http://localhost:5000/api/leave/requestLeave`, {
+      method: "POST",
       headers: {
-        "Content-Type": "application/json"
-      },
+        "Content-Type": "application/json",
+        "auth-token":localStorage.getItem("token")
+      },        
+      body: JSON.stringify({    leavereason,     
+        from,    
+        to})
     });
     // eslint-disable-next-line
     const json = await response.json();
+
     return json
    
   }
@@ -419,8 +498,14 @@ const ProjectState = (props) => {
         deleteProject,
         updateTask,
         markDailyAttendance,
-        getLocationName,
+        requestLeave,
+        getLeaves,
         getAttendance,
+        updateDailyAttendance,
+        leaves, setLeaves,
+        requestLeave,
+        updateLeaveApproval,
+        updateLeave,
         tasks,
         attendances,
         employees, 

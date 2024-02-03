@@ -15,7 +15,6 @@ router.get("/getDailyAttendance", fetchuser, async (req, res) => {
       const attendance = await Attendance.find({ user : req.user.id });
       res.json(attendance);
     } else{
-    
       res.json("Invalid Code: Un-Authorized User");
     }
   } catch (err) {
@@ -27,41 +26,11 @@ router.get("/getDailyAttendance", fetchuser, async (req, res) => {
 // ------------------------------------------ Route 2: update an existin projectusing PUT: "api/projects/update" -login required
 router.put("/updateDailyAttendance/:id", fetchuser, async (req, res) => {
   const {       
-    user,
-    attendance,
-    reason,
-    start_time,
-    leave_time,
-    date,
-    place
+    leave_time
   } = req.body;
 
-  const newProject = {};
-  if (user) {
-    newProject.user = user;
-  }
-  if (attendance) {
-    newProject.attendance = attendance;
-  }
-  if (reason) {
-    newProject.reason = reason;
-  }
-  if (start_time) {
-    newProject.start_time = start_time;
-  }
-  if (leave_time) {
-    newProject.leave_time = leave_time;
-  }
-
-  if (place) {
-    newProject.place = place;
-  }
-
-  if (date) {
-    newProject.date = date;
-  }
-
   var project = await Attendance.findById(req.params.id);
+
   if (!project) {
     return res.status(404).send("not found");
   }
@@ -70,12 +39,37 @@ router.put("/updateDailyAttendance/:id", fetchuser, async (req, res) => {
     return res.status(401).send("Unauthorized");
   }
 
+  const start_time = project.start_time;
+  const leaveTimeString = leave_time;
+  const startTimeString = start_time;
+  const leaveTimeSplit = leaveTimeString.split(':');
+  const startTimeSplit = startTimeString.split(':');
+  var worked_mins = (parseInt(leaveTimeSplit[0]) - parseInt(startTimeSplit[0])) * 60 + (parseInt(leaveTimeSplit[1]) - parseInt(startTimeSplit[1]));
+
+  const newProject = {};
+  const attendance = 2;
+
+  if (leave_time) {
+    newProject.leave_time = leave_time;
+  }
+  if (worked_mins) {
+    newProject.worked_mins = worked_mins;
+  }
+  if (attendance) {
+    newProject.attendance = attendance;
+  }
+
+
+  
+
   try {
     project = await Attendance.findByIdAndUpdate(
       req.params.id,
       { $set: newProject },
       { new: true }
     );
+
+    console.log("ud",project)
 
     res.json(project);
   } catch (err) {
@@ -87,7 +81,6 @@ router.put("/updateDailyAttendance/:id", fetchuser, async (req, res) => {
 // ----------------------------------- Route 3: add new attendance using POSt: "api/attendance/addProject"
 router.post("/markDailyAttendance",fetchuser, async (req, res) => {
   const {
-    attendance,
     reason,
     start_time,
     leave_time,
@@ -103,26 +96,24 @@ router.post("/markDailyAttendance",fetchuser, async (req, res) => {
   });
 
   const place = location.data[0].name.toString();
-  const leaveTimeString = leave_time;
-  const startTimeString = start_time;
-  const leaveTimeSplit = leaveTimeString.split(':');
-  const startTimeSplit = startTimeString.split(':');
-  const worked_mins = (parseInt(leaveTimeSplit[0]) - parseInt(startTimeSplit[0])) * 60 + (parseInt(leaveTimeSplit[1]) - parseInt(startTimeSplit[1]));
- 
-
+  var worked_mins = 0;
+  let user = await User.findById(req.user.id);
+  const attendance = 1;
   try {
-    const project = {
+    const project= new Attendance({
       user:req.user.id,
-      attendance,
+      attendance: attendance,
       reason,
       start_time,
       leave_time,
       worked_mins,
       date,
-      place
-    };
+      place,
+      name:user.name
+    });
 
-    const saveClothe = project
+
+    const saveClothe = await project.save();
     console.log(saveClothe, "Successfully Saved!!")
     res.send(saveClothe);
 
