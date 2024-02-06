@@ -8,14 +8,19 @@ const DrawDoughnut = ({ title, align, position, titpos, titalgn, values, label }
 
   const labels = label;
   const dataValues = values;
+  const lightColor = 'hsl(0, 0%, 100%)';
+  const red = 'rgba(255, 99, 132)';
+  const blue = 'rgba(54, 162, 235)';
+  const yellow = 'rgba(255, 206, 86)';
+  const green = 'rgba(75, 192, 192)';
 
   const data = {
     labels: labels,
     datasets: [
       {
         data: dataValues,
-        backgroundColor: ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)', 'rgba(75, 192, 192)'],
-        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+        backgroundColor: [red, blue, yellow, green],
+        borderColor: [red, blue, yellow, green],
         borderWidth: 1,
         cutout: '75%',
       },
@@ -31,13 +36,13 @@ const DrawDoughnut = ({ title, align, position, titpos, titalgn, values, label }
         position: position,
         align: align,
         labels: {
-          color: 'white',
+          color: lightColor,
         },
       },
       title: {
         display: true,
         text: title,
-        color: 'white',
+        color: lightColor,
         position: titpos,
         align: titalgn,
         font: {

@@ -1,19 +1,23 @@
 @use "../../../variables" as *;
 
 .projects{
-    color: $light;
-    width: 80%;
-    margin-left: 10%;
-    height: 100vh;
-    
-    .task-modal {
-      color: #000;
-    }
+  color: $light;
+  width: 80%;
+  margin-left: 10%;
+  height: 100vh;
+  
+  .task-modal {
+    color: $dark;
+  }
+  
   .all-project-lists{
-    color: black;
-    display: flex; flex-direction: row; align-items: center; justify-content: center;
+    color: $dark;
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    justify-content: center;
     .project-card-overview{
-        height: 30vh;
+        height: 32vh;
         width: 30vh;
         margin-bottom: 40px;
         -webkit-line-clamp: 3; 
@@ -21,13 +25,13 @@
         text-overflow: ellipsis;
         .project-overview{
             height: 100%;
-            background-color: #fff;
+            background-color: $light;
             .project-card-img{
                 height: 50%;
                 object-fit: contain;
             }
 
-              padding-bottom: 17px;
+            padding-bottom: 17px;
             
         }
         .create-project-button {
@@ -48,7 +52,7 @@
 
   .add-project-button{
     height: 100%;
-    background-color: hsl(0, 0%, 90%);
+    background-color: $grey;
   }
 }
 .project-overview-body{

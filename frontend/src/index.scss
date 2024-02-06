@@ -18,14 +18,12 @@ code {
 body, html {
   margin: 0;
   padding: 0;
-  font-size: 62.5%;
   height: 100%;
   scroll-behavior: smooth;
   overflow-x: hidden;
   color: white;
   width: 100vw;
   height: 100vh;
-  background-color: #fff;
   //background: linear-gradient(114deg, rgba(71,77,132,1) 0%, rgba(17,19,45,1) 78%);
   
   &::-webkit-scrollbar {

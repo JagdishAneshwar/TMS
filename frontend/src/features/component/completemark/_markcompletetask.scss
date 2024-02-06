@@ -23,15 +23,15 @@
       text-overflow: ellipsis; 
     }
     .danger{
-        color: #ff6384;
+        color: $lightRed;
       }
       .warning{
-        color: #ffe863;
+        color: $lightYellow;
       }
       .primary{
-        color: #81d7b5;
+        color: $lightGreen;
       }
       .grey{
-        color: #ffffff;
+        color: $light;
       }
 }

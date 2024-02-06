@@ -33,7 +33,6 @@ const ProjectState = (props) => {
     }
   };
   
-  
   const getProject = async () => {
     try {
           // API calls
@@ -256,7 +255,6 @@ const ProjectState = (props) => {
     setLeaves(json);
   };
 
-
   const getAttendance = async () => {
     // API calls
     const response = await fetch(
@@ -274,7 +272,6 @@ const ProjectState = (props) => {
     setAttendance(json);
   };
 
-    // Delete task function
     const deleteTask = async (id) => {
       // API calls
       
@@ -316,7 +313,6 @@ const ProjectState = (props) => {
       });
       setproject(newProjects);
     };
-
 
   const updateProject = async (
     id,
@@ -443,8 +439,9 @@ const ProjectState = (props) => {
     status,
     priority,
     start_date,
+    where,
     due_date}, navigate) => {
-    navigate(`/project`, {
+    navigate(`/task`, {
       state: {  _id,    title,
         description,
         spent,
@@ -452,12 +449,55 @@ const ProjectState = (props) => {
         status,
         start_date,
         priority,
+        where,
         due_date },
+    });
+
+    console.log(_id,    title,
+      description,
+      spent,
+      assigned,
+      status,
+      start_date,
+      priority,
+      where,
+      due_date )
+    
+  };
+
+  const toDetailedEmployeedPage = ({ _id,
+    name,
+    mobile,
+    email,
+    dob,
+    doj,
+    ad,
+    role,
+    address,
+    pincode,
+    city,
+    gender,
+    salary }, navigate) => {
+    navigate(`/detailedEmployeePage`, {
+      state: {  
+        _id,
+        name,
+        mobile,
+        email,
+        dob,
+        doj,
+        ad,
+        role,
+        address,
+        pincode,
+        city,
+        gender,
+        salary
+        },
     });
     
   };
   
-
   const requestLeave = async (    
     leavereason,     
     from,    
@@ -502,6 +542,7 @@ const ProjectState = (props) => {
         getLeaves,
         getAttendance,
         updateDailyAttendance,
+        toDetailedEmployeedPage,
         leaves, setLeaves,
         requestLeave,
         updateLeaveApproval,

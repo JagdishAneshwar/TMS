@@ -5,6 +5,7 @@ import EmployeeCard from "../../../features/component/employee-card/EmployeeCard
 import options from "../../data"
 import Input from "../../../components/input/Input";
 import "./_employee.scss";
+import Navigator from "../../../features/component/navigator/Navigator";
 
 const Employee = () => {
   const refClose = useRef();
@@ -293,21 +294,28 @@ const Employee = () => {
       <br/><br/><div className="total-employee">Total Employee: 150</div>
       <hr/>
       <div className="employee-lists d-flex flex-column">
-
         {employees && employees.map((employee)=>{
           return(
           <EmployeeCard
-                  img={require("../../../res/image/img1.jpg")}
-                  name={employee.name}
-                  role={employee.role}
-                  age={calculateAge(employee.dob)}
-                  gender={employee.gender}
-                  email={employee.email}
-                  phone={employee.mobile}
-                  salary={employee.salary}
-                />)
+          _id={employee._id}
+          dob={employee.dob}
+          doj={employee.doj}
+          ad={employee.ad}
+          role={employee.role}
+          address={employee.address}
+          pincode={employee.pincode}
+          city={employee.city}
+          gender={employee.gender}
+          img={require("../../../res/image/img1.jpg")}
+          name={employee.name}
+          age={calculateAge(employee.dob)}
+          email={employee.email}
+          mobile={employee.mobile}
+          salary={employee.salary}
+          />)
         })}       
       </div>
+      <Navigator/>
     </div>
   );
 };

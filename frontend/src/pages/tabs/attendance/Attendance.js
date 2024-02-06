@@ -8,6 +8,7 @@ import RequestLeave from '../../../widgets/forms/reuestleave/RequestLeave';
 import swal from 'sweetalert';
 import LeaveRequest from '../../../features/component/leaverequest/LeaveRequest';
 import { Colors } from 'chart.js';
+import Navigator from "../../../features/component/navigator/Navigator"
 import "./_attendance.scss"
 
 Chart.register(Colors);
@@ -239,6 +240,7 @@ const Attendance = () => {
 
   return (
     <div className='attendance-dashboard'>
+    
     <div>
     <h1>Attendance</h1><hr/><br/>
     {check == "show" ?
@@ -297,6 +299,8 @@ const Attendance = () => {
       ))}
     </div>
     )}
+
+    <Navigator  />
     
     </div>
 

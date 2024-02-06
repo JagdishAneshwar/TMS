@@ -1,9 +1,9 @@
 import React, {useState, useEffect, useRef, useContext} from 'react'
 import ProjectOverview from '../../../features/component/project-overview-card/ProjectOverview';
 import projectContext from "../../../context/project/projectContext"
-import EmployeeCard from "../../../features/component/employee-card/EmployeeCard";
 import Select from 'react-select'
 import "./_projects.scss";
+import Navigator from '../../../features/component/navigator/Navigator';
 
 const Projects = () => {
   const context = useContext(projectContext);
@@ -68,7 +68,7 @@ const Projects = () => {
   
 return(
     <div className='projects' style={dashboardStyle}>
-    
+
     <div class="task-modal modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -207,7 +207,7 @@ return(
         })}       
 
       </div>
-      
+      <Navigator/>
     </div>
   )
 }

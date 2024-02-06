@@ -1,7 +1,7 @@
 @use "../../../variables" as *;
 
 
-tr{
+.task-list-table  tr{
     width: 100%;
     
     color: $light;
@@ -14,19 +14,16 @@ tr{
       color: $light !important;
     }
     .danger{
-        color: #ff6384;
+        color: $lightRed;
       }
       .warning{
-        color: #ffe863;
+        color: $lightYellow;
       }
       .primary{
-        color: #81d7b5;
+        color: $lightGreen;
       }
       .grey{
-        color: #ffffff;
+        color: $light;
       }
 }
 
-.MuiSvgIcon-root {
-  color : "red" !important;
-}

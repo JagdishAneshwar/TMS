@@ -4,10 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import projectContext from '../../../context/project/projectContext'
 import "./_project.scss"
 
-const Project = ({_id, title, description, start_date, due_date, spent, status, assigned, priority}) => {
+const Project = ({_id, title, description, start_date, due_date, spent, status, assigned, priority, where="true"}) => {
     const Context = useContext(projectContext)
     const navigate = useNavigate();
     const {toComponentB} = Context;
+    
+
+    console.log({_id, title, description, start_date, due_date, spent, status, assigned, priority, where})
 
     // const total_tasks_of_project = tasks.filter((task)=>{
     //     return(
@@ -33,6 +36,7 @@ const Project = ({_id, title, description, start_date, due_date, spent, status, 
         spent,
         status,
         priority,
+        where,
         assigned}, navigate);}}>
             <td  className='p-3'>{title}</td>
             <td>{description}</td>

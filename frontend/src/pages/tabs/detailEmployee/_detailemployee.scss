@@ -1,0 +1,23 @@
+@use "../../../variables" as *;
+
+
+.detailed-employee-page{
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 2%;
+}
+
+
+.detailed-employee-info-table{
+    background: $primary;
+    color: $light;
+    padding: 2%;
+    justify-content: center;
+    vertical-align: middle;
+    line-height: 100%;  
+}
+
+
+.dashboard-title{
+    @include dashboard-title
+}

@@ -186,6 +186,10 @@ const Signup = () => {
       // },
     };
 
+
+
+    
+
   return (
     <section className="register-section">
     <div className="row g-0 register-container">

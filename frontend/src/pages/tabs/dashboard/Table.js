@@ -11,9 +11,10 @@ const Table = () => {
 
   const uploadEvents = async () => {
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file',file);
+    console.log(file)
     try {
-      await axios.post('http://localhost:5000/api/event/uploadEvents', formData);
+      await axios.post('http://localhost:5000/api/event/uploadEvents', file);
       alert('Events uploaded successfully!');
     } catch (error) {
       console.error(error);
@@ -37,7 +38,7 @@ const Table = () => {
   return (
     <div>
       <h1>Event Board</h1>
-      <input type="file" accept=".xlsx" onChange={handleFileChange} />
+      <input type="file" onChange={handleFileChange} name="file" />
       <button onClick={uploadEvents}>Upload Events</button>
       <button onClick={fetchEvents}>Fetch Events</button>
     </div>

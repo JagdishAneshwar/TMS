@@ -1,3 +1,7 @@
+@use "../../../variables" as *;
+
+
+
 .project-overview-body{
     position: relative;
     height: 100%;
@@ -7,3 +11,28 @@
     position: absolute;
     width: 90%;
     bottom: 0;}
+
+
+.project-overview-description{
+    -webkit-line-clamp: 2; 
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    color: $dark;
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+}

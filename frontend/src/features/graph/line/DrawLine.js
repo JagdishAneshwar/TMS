@@ -8,6 +8,8 @@ const DrawLine = ({ dates, earned_value, spent }) => {
   const screenWidth = window.innerWidth || document.documentElement.clientWidth;
   const ratio = screenWidth < 768 ? 1 : 2;
 
+  const lightColor = 'hsl(0, 0%, 100%)';
+  const tertiaryColor = 'hsl(236, 44%, 12%)';
 
   const labels = dates;
   const data = {
@@ -33,7 +35,7 @@ const DrawLine = ({ dates, earned_value, spent }) => {
       title: {
         display: true,
         text: `Progress`,
-        color: 'white',
+        color: lightColor,
         position: 'bottom',
       },
       legend: {
@@ -41,7 +43,7 @@ const DrawLine = ({ dates, earned_value, spent }) => {
         position: 'bottom',
         align: 'center',
         labels: {
-          color: 'white',
+          color: lightColor,
         },
       },
     },
@@ -49,19 +51,19 @@ const DrawLine = ({ dates, earned_value, spent }) => {
       x: {
         beginAtZero: true,
         grid: {
-          color: 'white',
+          color: lightColor,
         },
         ticks: {
-          color: 'white',
+          color: lightColor,
         },
       },
       y: {
         beginAtZero: true,
         grid: {
-          color: 'white',
+          color: lightColor,
         },
         ticks: {
-          color: 'white',
+          color: lightColor,
         },
       },
     },

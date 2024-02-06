@@ -1,15 +1,10 @@
  import React, {useState, useEffect, useRef, useContext} from 'react'
  import projectContext from "../../../context/project/projectContext"
- import DrawDoughnut from "../../../features/graph/dough/DrawDoughnut"
  import Profile from "../../../features/component/circular-profile/Profile"
- import DrawLine from '../../../features/graph/line/DrawLine';
- import Task from '../../../features/component/task-card/Task';
- import { Link, useNavigate } from "react-router-dom";
-
  import UpdateTask from '../../../widgets/forms/updatetask/UpdateTask'
- import AddTask from '../../../features/component/task-model/TaskModel';
- import { useLocation } from "react-router-dom";
+ import { useLocation, Link, useHistory } from 'react-router-dom';
  import "./_project.scss";
+import Navigator from '../../../features/component/navigator/Navigator';
 
  const Project = () => {
    const location = useLocation();
@@ -21,6 +16,7 @@
         assigned,
         status,
         priority,
+        where,
         start_date,
         due_date} = location.state;
         const members = assigned[0][0].assigned;
@@ -80,13 +76,23 @@ const onClickRemoveTask = () => {
    width: dashboardWidth,
    marginLeft: dashboardMargin
   }
-
+  const [home, sethome] = useState(where)
      return (
-     <div className='project-main' key={_id} style={dashboardStyle}>
-     <UpdateTask taskInfo={{ _id, title, description, spent, assigned, status, priority, start_date, due_date }} />
-     <Link to="/dashboard"><h4 className="dashboard-title">Dashboard</h4></Link>
+     <div className='task-main' key={_id} style={dashboardStyle}>
+     {home == "true" ? (
+             <Link to="/dashboard">
+     <div className="d-flex flex-row tms-btn">
+     <div className="tms-btn">
+      <img src={`${require("./back.png")}`}/>
+      </div>
+     <h4 className="dashboard-title">Task details</h4></div></Link>):(<Link to="/tasks">
+     <div className="d-flex flex-row tms-btn">
+      <div to="/tasks" className="tms-btn">
+      <img src={`${require("./back.png")}`}/>
+      </div>
+     <h4 className="dashboard-title">Task details</h4></div></Link>)}
      <div className='info d-flex flex-row justify-content-around align-content-center p-3' >
-       <div className="project-profile">
+       <div className="task-profile">
        <Profile />
        </div>
        <div className='title-description'>
@@ -123,8 +129,8 @@ const onClickRemoveTask = () => {
 
      <button type="button" className="btn task-update-btn btn-lg w-50" data-bs-toggle="modal" data-bs-target="#updateproject">Update</button>
      <button type="button" class="btn task-delete-btn btn-lg w-50" onClick={onClickRemoveTask}>Delete</button>
-
-
+     <UpdateTask taskInfo={{ _id, title, description, spent, assigned, status, priority, start_date, due_date }} />
+<Navigator/>
    </div>
    )
  }

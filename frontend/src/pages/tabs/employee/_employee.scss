@@ -2,7 +2,7 @@
 
 
 .employee-section{
-    color: white;
+    color: $light;
     .add-employee{
         width: 100%;
         height: 50px;
@@ -16,5 +16,5 @@
 }
 .employee-dialog{
     background-color: $secondary;
-    color: white;
+    color: $light;
 }

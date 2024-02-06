@@ -8,6 +8,7 @@ import MarkCompleteTask from '../../../features/component/completemark/MarkCompl
 import Table from "./Table"
 import DrawDoughnut from "../../../features/graph/dough/DrawDoughnut";
 import "./_dashboard.scss";
+import Navigator from '../../../features/component/navigator/Navigator';
 // import Table from './Table';
 
 const Dashboard = () => {
@@ -145,7 +146,7 @@ const Dashboard = () => {
            width={"30%"}
          />
        </div><br/><br/>
-        {/* <Table/> */}
+        {/* <Table/>  */}
        <h2>Task Progress</h2><hr/>
        { task_complete.length > 0 || complete_length > 0 || incomplete_length > 0 ?(<div className="project-progress justify-content-around"  style={tasksectionStyle}>
        { code == "2562" ? (
@@ -268,6 +269,10 @@ const Dashboard = () => {
               </div>
               </div>):(<p className='quotes'>Nothing to preview</p>) }
 
+              <div className="w-50" style={{height:"10%"}}>
+              <Navigator
+      isDashboardSelected="true"
+      /></div>
            
      </div>
    );

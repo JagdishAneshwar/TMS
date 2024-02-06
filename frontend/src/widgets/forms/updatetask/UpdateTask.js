@@ -18,15 +18,6 @@ const UpdateTask = ({ taskInfo }) => {
     due_date: taskInfo.due_date,
   });
 
-  console.log(      task._id,
-    task.title,
-    task.description,
-    task.spent,
-    task.start_date,
-    task.status,
-    task.priority,
-    task.due_date)
-  console.log(task)
 
   const members = taskInfo.assigned
   const { updateTask, employees } = context;

@@ -1,12 +1,14 @@
-
 import './_App.scss';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from './pages/register/Register';
 import Login from './pages/login/Login';
 import ProjectState from './context/project/ProjectState';
-import Home from './pages/home/Home';
-import Project from './pages/tabs/project/Project';
-import Projects from "./pages/tabs/projects/Projects";
+import Task from './pages/tabs/project/Project';
+import Tasks from "./pages/tabs/projects/Projects";
+import DetailEmployee from './pages/tabs/detailEmployee/DetailEmployee';
+import Employee from './pages/tabs/employee/Employee';
+import Attendance from './pages/tabs/attendance/Attendance';
+import Dashboard from './pages/tabs/dashboard/Dashboard';
 
 function App() {
   return (
@@ -18,9 +20,12 @@ function App() {
               <Route exact path="/" element={<Login />} />
               <Route exact path="/register" element={<Register />} />
               <Route exact path="/login" element={<Login />} />
-              <Route exact path="/dashboard" element={<Home />} />
-              <Route exact path="/project" element={<Project />} />
-              <Route exact path="/projects" element={<Projects />} />
+              <Route exact path="/dashboard" element={<Dashboard />} />
+              <Route exact path="/task" element={<Task />} />
+              <Route exact path="/tasks" element={<Tasks />} />
+              <Route exact path="/employees" element={<Employee />} />
+              <Route exact path="/attendances" element={<Attendance />} />
+              <Route exact path="/detailedEmployeePage" element={<DetailEmployee />} />
             </Routes>
           </BrowserRouter>
           
@@ -30,4 +35,5 @@ function App() {
 }
 
 export default App;
+
 

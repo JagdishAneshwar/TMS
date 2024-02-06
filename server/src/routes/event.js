@@ -1,22 +1,42 @@
-const { MongoClient } = require('mongodb');
-const multer = require('multer');
-const XLSX = require('xlsx');
-const express = require("express");
+const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const csvParser = require('csv-parser');
+const MongoClient = require('mongodb').MongoClient;
 
-
-// Multer middleware for handling file uploads
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-const uri = "mongodb+srv://skstech:gJ68ZxFEc40CbyJG@cluster0.ynec5u4.mongodb.net/";
-
+var upload = multer({
+  dest: 'uploads/',
+  storage: multer.memoryStorage()
+});
 
 router.post('/uploadEvents', upload.single('file'), async (req, res) => {
   try {
-    const workbook = XLSX.read(req.file.buffer, { type: 'buffer' });
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
-    const jsonData = XLSX.utils.sheet_to_json(sheet);
+    console.log(req.file)
+    const jsonData = req.file.buffer
+      .toString('utf8')
+      .split('\n')
+      .slice(1) // Skip the header row
+      .map((line) => {
+        const [
+          Subject,
+          StartDate,
+          EndDate,
+          AllDayEvent,
+          BirthDate,
+          Age,
+          Description,
+        ] = line.split(',');
+
+        return {
+          Subject: Subject.trim(),
+          StartDate: StartDate.trim(),
+          EndDate: EndDate.trim(),
+          AllDayEvent: AllDayEvent.trim() === 'TRUE',
+          BirthDate: BirthDate.trim(),
+          Age: parseInt(Age.trim(), 10),
+          Description: Description.trim(),
+        };
+      });
 
     const uri = "mongodb+srv://skstech:gJ68ZxFEc40CbyJG@cluster0.ynec5u4.mongodb.net/";
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -31,10 +51,14 @@ router.post('/uploadEvents', upload.single('file'), async (req, res) => {
     await client.close();
     res.status(200).json({ message: 'Upload successful' });
   } catch (error) {
-    console.error('Error during events upload:', error);
+    console.error(error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+
+
 
 
 function convertToEpochDate(numberOfDays) {
