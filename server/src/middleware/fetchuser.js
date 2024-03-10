@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { privateKey } = require("../../config");
 
 const fetchuser = (req, res, next) => {
   // get the user from jwt token and add id to req object
