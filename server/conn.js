@@ -1,7 +1,7 @@
 const mongo = require("mongoose");
 
 
-const mongoURI = process.env.MDURL;
+const mongoURI = process.env.MONGODB_URI;
 
 
 
