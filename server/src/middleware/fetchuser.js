@@ -10,7 +10,7 @@ const fetchuser = (req, res, next) => {
   }
   
   try {
-    const data = jwt.verify(token, privateKey);
+    const data = jwt.verify(token, process.env.PRIVATE_KEY);
     // adding id to req object
     req.user = data.user;
     
