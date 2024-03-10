@@ -3,13 +3,10 @@ const mongo = require("mongoose");
 
 const mongoURI = process.env.MDURL;
 
-const connectionParams = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+
 
 const connToMongo = async () => {
-  await mongo.connect(mongoURI, connectionParams).then(() => {
+  await mongo.connect(mongoURI).then(() => {
     console.log("Successfully! connected with database");
   });
 };
