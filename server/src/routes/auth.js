@@ -1,5 +1,4 @@
 const express = require("express");
-const { privateKey } = require("../../config");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
@@ -139,7 +138,7 @@ router.post(
         },
       };
 
-      const token = jwt.sign(data, privateKey);
+      const token = jwt.sign(data, process.env.PRIVATE_KEY);
       res.json({ token , user});
 
     } catch (err) {
