@@ -16,6 +16,7 @@ app.use("/api/task", require("./src/routes/tasks"));
 app.use("/api/leave", require("./src/routes/leave"));
 app.use("/api/attendance", require("./src/routes/attendance"));
 app.use("/api/event", require("./src/routes/event"));
+app.get('/', cors(), (req, res)=>{ res.json("Hello") })
 
 app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port http://localhost:${port}`);
