@@ -10,7 +10,7 @@ const ProjectState = (props) => {
   const [tasks, settask] = useState(notesInitial2);
   const [attendances, setAttendance] = useState(notesInitial3);
   const [leaves, setLeaves] = useState(notesInitial3);
-  const host = "http://localhost:5000"
+  const host = "https://api-tms.vercel.app"
   const notesInitialemp = [];
   const [employees, setemployees] = useState(notesInitialemp);
 
