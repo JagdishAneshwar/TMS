@@ -2,556 +2,138 @@ import React, { useState } from "react";
 import projectContext from "./projectContext";
 
 const ProjectState = (props) => {
-  const notesInitial = [];
-  const notesInitial2 = [];
-  const notesInitial3 = [];
-  const [projects, setproject] = useState(notesInitial);
-  const [projecthistory, setprojecthistory] = useState(notesInitial);
-  const [tasks, settask] = useState(notesInitial2);
-  const [attendances, setAttendance] = useState(notesInitial3);
-  const [leaves, setLeaves] = useState(notesInitial3);
-  const host = "https://api-tms.vercel.app"
-  const notesInitialemp = [];
-  const [employees, setemployees] = useState(notesInitialemp);
+  const host = "https://api-tms.vercel.app";
+  const [projects, setProjects] = useState([]);
+  const [projectHistory, setProjectHistory] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [attendances, setAttendance] = useState([]);
+  const [leaves, setLeaves] = useState([]);
+  const [employees, setEmployees] = useState([]);
+
+  const fetchAPI = async (url, method = "GET", body = null) => {
+    try {
+      const response = await fetch(`${host}${url}`, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: body ? JSON.stringify(body) : null,
+      });
+      return response.json();
+    } catch (error) {
+      console.error(`Error in ${url}:`, error);
+      return null;
+    }
+  };
 
   const getAllEmployeeDetails = async () => {
-    try {
-
-      const response = await fetch(`${host}/api/user/allUserDetails`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin':'*',
-          "auth-token": localStorage.getItem("token"),
-        },
-      });
-      const json = await response.json();
-
-      setemployees(json);
-    } catch (error) {
-      console.error("Error in getAllEmployeeDetails:", error);
-    }
+    const data = await fetchAPI("/api/user/allUserDetails");
+    if (data) setEmployees(data);
   };
-  
+
   const getProject = async () => {
-    try {
-          // API calls
-    const response = await fetch(
-      `${host}/api/user/allUserDetails`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin':'http://localhost:3000',
-          "auth-token": localStorage.getItem("token"),
-        },
-      }
-    );
-    const json = await response.json();
-    setproject(json);
-    } catch (error) {
-      console.error("Error in getProject:", error);
-      // Handle the error as needed
-    }
+    const data = await fetchAPI("/api/user/allUserDetails");
+    if (data) setProjects(data);
   };
+
   const getProjectHistory = async (_id) => {
-    // API calls
-    const response = await fetch(
-      `${host}/api/project/projecthistory/${_id}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin':'*',
-          "auth-token": localStorage.getItem("token"),
-        },
-        
-      }
-    );
-    const json = await response.json();
-    setprojecthistory(json);
+    const data = await fetchAPI(`/api/project/projecthistory/${_id}`);
+    if (data) setProjectHistory(data);
   };
 
-  const createProject = async (
-    title, 
-    description,
-    budget,
-    spent, 
-    start_date, 
-    due_date, 
-    priority, 
-    client, 
-    tasks,
-    members, 
-    img
-  ) => {
-    const response = await fetch(`${host}/api/project/addProject`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        budget,
-        client,
-        spent: "0",
-        tasks: "",
-        img: "",
-        members,
-        priority,
-        start_date,
-        due_date
-      }),
-    });
-
-    const project = await response.json();
-    setproject(project);
+  const createProject = async (projectData) => {
+    const data = await fetchAPI("/api/project/addProject", "POST", projectData);
+    if (data) setProjects([...projects, data]);
   };
 
-  const createTask = async (
-    title,
-    description,
-    spent,
-    status,
-    priority,
-    assigned,
-    start_date,
-    due_date
-    
-  ) => {
-    const response = await fetch(`${host}/api/task/addTask`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        spent,
-        status,
-        priority,
-        assigned,
-        start_date,
-        due_date
-      }),
-    });
-    
-    const task = await response.json();
-    settask(task);
-    
+  const createTask = async (taskData) => {
+    const data = await fetchAPI("/api/task/addTask", "POST", taskData);
+    if (data) setTasks([...tasks, data]);
   };
 
-  const markDailyAttendance = async (
-    reason, 
-    start_time, 
-    leave_time,
-    date,
-    latitude,
-    longitude
-  ) => {
-    const response = await fetch(`${host}/api/attendance/markDailyAttendance`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        reason, 
-        start_time, 
-        leave_time,
-        date,
-        latitude,
-        longitude,
-      }),
-    }); 
-    const task = await response.json();  
+  const markDailyAttendance = async (attendanceData) => {
+    await fetchAPI("/api/attendance/markDailyAttendance", "POST", attendanceData);
   };
 
-  const updateDailyAttendance = async (
-    id, 
-    leave_time
-  ) => {
-    console.log("state",
-    id, 
-    leave_time)
-    const response = await fetch(`${host}/api/attendance/updateDailyAttendance/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        leave_time
-      }),
-    }); 
-    const task = await response.json();  
+  const updateDailyAttendance = async (id, leave_time) => {
+    await fetchAPI(`/api/attendance/updateDailyAttendance/${id}`, "PUT", { leave_time });
   };
 
   const updateLeave = async (ids) => {
-    const response = await fetch(`${host}/api/leave/updateLeaveViewStatus`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({ids}),
-    }); 
-    const task = await response.json(); 
+    await fetchAPI("/api/leave/updateLeaveViewStatus", "PUT", { ids });
   };
 
   const updateLeaveApproval = async (id, status, comment) => {
-    const response = await fetch(`${host}/api/leave/updateLeaveApproval`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({id, status, comment}),
-    }); 
-    const task = await response.json(); 
-
+    await fetchAPI("/api/leave/updateLeaveApproval", "PUT", { id, status, comment });
   };
 
   const getTasks = async () => {
-    // API calls
-    const response = await fetch(
-      `${host}/api/task/allTaskDetails`,
-      {
-        method: "GET",
-        headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-        },
-      }
-    );
-    const json = await response.json();
-    settask(json);
+    const data = await fetchAPI("/api/task/allTaskDetails");
+    if (data) setTasks(data);
   };
 
   const getLeaves = async () => {
-    // API calls
-    const response = await fetch(
-      `${host}/api/leave/getAllLeaves`,
-      {
-        method: "GET",
-        headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-        },
-      }
-    );
-    const json = await response.json();
-    setLeaves(json);
+    const data = await fetchAPI("/api/leave/getAllLeaves");
+    if (data) setLeaves(data);
   };
 
   const getAttendance = async () => {
-    // API calls
-    const response = await fetch(
-      `${host}/api/attendance/getDailyAttendance`,
-      {
-        method: "GET",
-        headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-        },
-      }
-    );
-    const json = await response.json();
-    setAttendance(json);
+    const data = await fetchAPI("/api/attendance/getDailyAttendance");
+    if (data) setAttendance(data);
   };
 
-    const deleteTask = async (id) => {
-      // API calls
-      
-      const response = await fetch(`${host}/api/task/removeTask/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin':'*',
-          "auth-token": localStorage.getItem("token"),
-        },
-      });
-      
-      // eslint-disable-next-line
-      const json = await response.json();
-      
-      const newTasks = tasks.filter((task) => {
-        return task._id !== id;
-      });
-      settask(newTasks);
-    };
-    
-    const deleteProject = async (_id) => {
-      // API calls
-      
-      const response = await fetch(`${host}/api/project/removeProject/${_id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin':'*',
-          "auth-token": localStorage.getItem("token"),
-        },
-      });
-      
-      // eslint-disable-next-line
-      const json = await response.json();
-      
-      const newProjects = projects.filter((project) => {
-        return projects._id !== _id;
-      });
-      setproject(newProjects);
-    };
-
-  const updateProject = async (
-    id,
-    title, 
-    description,
-    budget,
-    spent, 
-    start_date, 
-    due_date, 
-    priority, 
-    client, 
-    tasks,
-    members, 
-    img
-  ) => {
-    // API calls
-    
-    const response = await fetch(`${host}/api/project/updateProject/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        budget,
-        spent,
-        start_date,
-        due_date,
-        priority, 
-        client, 
-        tasks,
-        members, 
-        img  }),
-    });
-    // eslint-disable-next-line
-    const json = await response.json();
-    
-    let newProject = JSON.parse(JSON.stringify(projects));
-    // Logic to edit note
-    for (let index = 0; index < newProject.length; index++) {
-      const element = newProject[index];
-      if (element._id === id) {
-        newProject[index].title = title;
-        newProject[index].description = description;
-        newProject[index].budget = budget;
-        newProject[index].spent = spent;
-        newProject[index].start_date = start_date;
-        newProject[index].due_date = due_date;
-        newProject[index].priority=priority;
-        newProject[index].client=client;
-        newProject[index].tasks=tasks;
-        newProject[index].members=members;
-        newProject[index].img=img
-        break;
-      }
-    }
-    
-    setproject(newProject);
+  const deleteTask = async (id) => {
+    await fetchAPI(`/api/task/removeTask/${id}`, "DELETE");
+    setTasks(tasks.filter((task) => task._id !== id));
   };
 
-  const updateTask = async (
-    task_id,
-    title,
-    description,
-    spent,
-    assigned,
-    status,
-    priority,
-    start_date,
-    due_date
-  ) => {
-
-    console.log("first", {    task_id,
-      title,
-      description,
-      spent,
-      assigned,
-      status,
-      priority,
-      start_date,
-      due_date})
-
-    const response = await fetch(`${host}/api/task/updateTask/${task_id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        'Access-Control-Allow-Origin':'*',
-        "auth-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-         title, description, spent, start_date, status, assigned, priority, due_date
-      }),
-    });
-    // eslint-disable-next-line
-    const json = await response.json();
-    
-  
-    let newTasks = JSON.parse(JSON.stringify(tasks));
-    // Logic to edit task
-    for (let index = 0; index < newTasks.length; index++) {
-      const element = newTasks[index];
-      if (element._id === task_id) {
-        newTasks[index].title = title;
-        newTasks[index].description = description;
-        newTasks[index].spent = spent;
-        newTasks[index].start_date = start_date;
-        newTasks[index].status = status;
-        newTasks[index].assigned = assigned;
-        newTasks[index].priority = priority;
-        newTasks[index].due_date = due_date;
-        break;
-      }
-    }
-    settask(newTasks);
-  };
-  
-  const toComponentB = ({  _id,    title,
-    description,
-    spent,
-    assigned,
-    status,
-    priority,
-    start_date,
-    where,
-    due_date}, navigate) => {
-    navigate(`/task`, {
-      state: {  _id,    title,
-        description,
-        spent,
-        assigned,
-        status,
-        start_date,
-        priority,
-        where,
-        due_date },
-    });
-
-    console.log(_id,    title,
-      description,
-      spent,
-      assigned,
-      status,
-      start_date,
-      priority,
-      where,
-      due_date )
-    
+  const deleteProject = async (_id) => {
+    await fetchAPI(`/api/project/removeProject/${_id}`, "DELETE");
+    setProjects(projects.filter((project) => project._id !== _id));
   };
 
-  const toDetailedEmployeedPage = ({ _id,
-    name,
-    mobile,
-    email,
-    dob,
-    doj,
-    ad,
-    role,
-    address,
-    pincode,
-    city,
-    gender,
-    salary }, navigate) => {
-    navigate(`/detailedEmployeePage`, {
-      state: {  
-        _id,
-        name,
-        mobile,
-        email,
-        dob,
-        doj,
-        ad,
-        role,
-        address,
-        pincode,
-        city,
-        gender,
-        salary
-        },
-    });
-    
+  const updateProject = async (id, updatedData) => {
+    await fetchAPI(`/api/project/updateProject/${id}`, "PUT", updatedData);
+    setProjects(projects.map((project) => (project._id === id ? { ...project, ...updatedData } : project)));
   };
-  
-  const requestLeave = async (    
-    leavereason,     
-    from,    
-    to) =>{
 
-    const response = await fetch(`http://localhost:5000/api/leave/requestLeave`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "auth-token":localStorage.getItem("token")
-      },        
-      body: JSON.stringify({    leavereason,     
-        from,    
-        to})
-    });
-    // eslint-disable-next-line
-    const json = await response.json();
+  const updateTask = async (task_id, updatedData) => {
+    await fetchAPI(`/api/task/updateTask/${task_id}`, "PUT", updatedData);
+    setTasks(tasks.map((task) => (task._id === task_id ? { ...task, ...updatedData } : task)));
+  };
 
-    return json
-   
-  }
-
+  const requestLeave = async (leaveData) => {
+    return await fetchAPI("/api/leave/requestLeave", "POST", leaveData);
+  };
 
   return (
     <projectContext.Provider
       value={{
         projects,
-        projecthistory,
-        setproject,
+        projectHistory,
+        tasks,
+        attendances,
+        leaves,
+        employees,
+        setEmployees,
+        getAllEmployeeDetails,
         createProject,
         getProject,
-        toComponentB,
+        getProjectHistory,
+        deleteProject,
         updateProject,
         createTask,
         getTasks,
         deleteTask,
-        getProjectHistory,
-        deleteProject,
         updateTask,
         markDailyAttendance,
-        requestLeave,
-        getLeaves,
         getAttendance,
         updateDailyAttendance,
-        toDetailedEmployeedPage,
-        leaves, setLeaves,
         requestLeave,
+        getLeaves,
         updateLeaveApproval,
         updateLeave,
-        tasks,
-        attendances,
-        employees, 
-            setemployees,
-            getAllEmployeeDetails
       }}
     >
       {props.children}
