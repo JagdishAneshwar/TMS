@@ -7,14 +7,7 @@ connToMongo();
 
 // to use request.body
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://tasky.thejagdish.com", // Allow only your frontend domain
-    methods: "GET,POST,PUT,DELETE,OPTIONS",
-    allowedHeaders: "Content-Type,Authorization",
-    credentials: true,
-  })
-);
+app.use(cors());
 
 
 // Available routes
@@ -27,7 +20,7 @@ app.use("/api/event", require("./src/routes/event"));
 app.get('/', cors(), (req, res)=>{ res.json("Hello") })
 
 app.listen(process.env.PORT || port, () => {
-  console.log(`Example app listening on port http://localhost:${port}`);
+  console.log(`Server is running on port:${port}`);
 });
 
 
