@@ -7,7 +7,15 @@ connToMongo();
 
 // to use request.body
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://tasky.thejagdish.com", // Allow only your frontend domain
+    methods: "GET,POST,PUT,DELETE,OPTIONS",
+    allowedHeaders: "Content-Type,Authorization",
+    credentials: true,
+  })
+);
+
 
 // Available routes
 app.use("/api/auth", require("./src/routes/auth"));
