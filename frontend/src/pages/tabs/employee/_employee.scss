@@ -1,0 +1,20 @@
+@use "../../../variables" as *;
+
+
+.employee-section{
+    color: $light;
+    .add-employee{
+        width: 100%;
+        height: 50px;
+        background: $primary;   
+        overflow: none;
+        border: none;
+    }
+    .employee-lists{
+        width: 100%;
+    }
+}
+.employee-dialog{
+    background-color: $secondary;
+    color: $light;
+}

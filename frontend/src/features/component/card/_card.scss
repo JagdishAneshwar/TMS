@@ -1,0 +1,43 @@
+@use "../../../variables" as * ;
+
+
+.card-wrapper{
+    background-color: $tertiary;
+    width: 30%;
+    height: 95px;
+    color: $light;
+    padding: 5px;
+    padding-left: 10px;
+    padding-top: 10px;
+    border-radius: 8px;
+    .card-img{
+        width: 30%;
+        height: 90%;
+        object-fit: contain;
+       
+        aspect-ratio: 1 / 1 !important; 
+      
+    }
+    .card-info{
+        width: 70%;
+        height: 100%;
+        padding-left: 10px;
+        .card-header{
+            font-weight: bold;
+            font-size: $heading3;
+        }
+        .card-value{
+            font-size: $heading3;
+            text-align: center;
+        }
+    }
+}
+
+
+
+@media (max-width: 550px){
+    .card-wrapper{
+        background-color: $tertiary;
+        width: 30%;
+        height: 60px !important;}
+}

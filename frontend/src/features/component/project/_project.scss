@@ -1,0 +1,29 @@
+@use "../../../variables" as *;
+
+
+.task-list-table  tr{
+    width: 100%;
+    
+    color: $light;
+    
+    background: linear-gradient(180deg, rgba(33,36,70,1) 0%, rgba(33,36,70,1) 92%, rgba(33,36,70,0.7091211484593838) 97%);
+    td{
+      color: $light !important;
+    }
+    th{
+      color: $light !important;
+    }
+    .danger{
+        color: $lightRed;
+      }
+      .warning{
+        color: $lightYellow;
+      }
+      .primary{
+        color: $lightGreen;
+      }
+      .grey{
+        color: $light;
+      }
+}
+

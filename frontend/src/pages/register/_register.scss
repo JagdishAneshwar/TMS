@@ -1,0 +1,36 @@
+@use "../../variables" as *;
+
+.register-section{
+    width: 100%;
+    height: 100vh;
+    color: $light;
+    font-size: $heading3;
+    .login-link{
+        color: $tertiary;
+        font-weight: 500;
+    }
+    .register-container{
+        overflow: hidden;
+        background-color: $primary;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        margin: 0 auto;
+        .register-img {
+            width: 40%;
+            object-fit: cover;
+        }
+        .register{
+            padding-left: 4rem;
+            padding-right: 4rem;
+            padding-top: 3rem;
+            .auth{
+                margin-bottom: 6%;
+            }
+            .register-title{
+                border-bottom: 1px solid $light;
+                padding-bottom: 3px;
+            }
+        }
+    }
+}

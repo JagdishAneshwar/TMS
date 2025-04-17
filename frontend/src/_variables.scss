@@ -1,0 +1,70 @@
+
+//font-family
+$font: hatolie, serif;
+
+// Colors
+$primary: hsl(232, 30%, 40%);
+$secondary:hsl(235, 33%, 27%);
+$tertiary: hsl(236, 44%, 12%);
+$light: hsl(0, 0%, 100%);
+$grey: hsl(0, 0%, 50%);
+$dark: hsl(0, 0%, 0%);
+
+//complimentry info color
+$green : hsl(164, 100%, 36%);
+$red : hsl(0, 77%, 59%);
+$yellow : hsl(56, 77%, 59%);
+
+$lightGreen : hsl(156, 52%, 67%);
+$lightRed : hsl(347, 100%, 69%);
+$lightYellow : hsl(51, 100%, 69%);
+$lightGrey: hsl(0, 0%, 80%);
+
+
+//font-sizes
+$brand-name: calc(0.7rem + 3vw);
+$nav-link: calc(0.7rem + 1vw);
+$centerLogo: calc(0.7rem + 14vw);
+$heading1: calc(1.3rem + 1vw);
+$heading2: calc(0.9rem + 1vw);
+$heading2_3: calc(0.4rem + 1vw);
+$heading3: calc(0.4rem + 0.7vw);
+$description: calc(0.3rem + 1vw);
+$small: calc(0.3rem + 1vw);
+$medium: calc(0.7rem + 1vw);
+
+
+
+//font-weight
+$regular: 400;
+$bold: 700;
+
+//paragraph-size
+$paraSize: 55ch;
+
+
+
+//mixin
+
+@mixin button-style {
+    text-decoration: none;
+    margin: 0;
+    padding: 10px 10px;
+    color: white;
+    border-radius: 5px;
+    border: 0px;
+    cursor: pointer;
+    display: inline-block;
+    img {width: 28px; height: 28px; margin: 0;padding: 0; }
+  
+    &:hover {
+      color: $tertiary;
+      img {filter: invert(100%);}
+      border: 0px;
+    }
+  }
+  
+@mixin dashboard-title{
+    font-size: $heading1;
+}
+  

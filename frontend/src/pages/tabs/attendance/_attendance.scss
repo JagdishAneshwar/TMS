@@ -1,0 +1,38 @@
+@use "../../../variables" as *;
+
+
+
+.attendance-dashboard{
+    margin-left: 10%;
+    width: 80%;
+    padding-bottom:4% !important;
+    .attendance-group{
+    width: 100%;
+    }
+.mark-attendance{
+    background: $primary;
+    border:none;
+    color: $light;
+    width: 100%;
+    height: 50px;
+    font-size: large;
+    &:hover{
+        background: $light;
+        border:none;
+        color: $tertiary;
+    }
+    &:focus{
+        background: $light;
+        border:none;
+        color: $tertiary;
+        box-shadow:none;
+    }
+    &:checked{
+        background: $light;
+        border:none;
+        color: $tertiary;
+        box-shadow:none;
+    }
+}
+
+}

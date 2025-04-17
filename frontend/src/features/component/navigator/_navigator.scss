@@ -1,0 +1,49 @@
+@use "../../../variables" as *;
+
+
+  .navbar {
+    min-height: 50px;
+    background: $tertiary;
+    color: $light !important;
+    padding: 0;
+    text-align: center;
+
+    .logout-btn>img{
+      width: 30px;
+      height: 30px;
+    }
+    .login-btn>img{
+      width: 30px;
+      height: 30px;
+    }
+
+    .nav{
+        height: 50px;
+        width: 100%;
+        border: solid $secondary 1px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      margin: 0;
+      padding: 0;
+      color: $light;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      &:hover {
+        background: $light;
+        color: $dark;
+      }
+    }
+
+    ul {
+        width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0;
+    }
+  }
+

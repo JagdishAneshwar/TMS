@@ -1,0 +1,26 @@
+@use "../../../variables" as *;
+
+.navbtn{
+    background-color: $secondary;
+    color: $light;
+    border: 0;
+    text-transform: capitalize;
+    font-weight: 400;
+    padding: 1rem;
+    &:hover{
+        background-color: $light;
+        color: $tertiary;
+    }
+    &:active {
+        background-color: $light;
+        color: $tertiary;
+    }
+    &:focus {
+        background-color: $light;
+        color: $tertiary;
+    }
+}
+
+
+
+

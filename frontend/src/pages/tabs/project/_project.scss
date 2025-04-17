@@ -1,0 +1,149 @@
+@use "../../../variables" as *;
+
+#update{
+    color: $dark;
+    font-size: $small;
+}
+
+.task-main{
+    color: $light;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    font-size: $heading3;
+    .dashboard-title{
+        @include dashboard-title
+    }
+    .info{
+        .task-profile{
+            width: 130px;
+            height: 130px;
+            margin-bottom: 10px;
+        }
+        .title-description {
+            width: calc(100% - 130PX - 5%);
+            margin-left: 5%;
+            .description{
+                font-size: $small;
+                padding-top: 0;
+                color: $grey;
+            }
+        }
+    }
+    .summary{
+        width: 100%;
+        height: auto;
+        padding: 8px;
+        
+    .summary-wrap{
+        width: 100%;
+        height: auto;
+       
+    }
+    }
+    .visualisation{
+        
+        margin-top: 3rem;
+        padding: 2rem;
+        padding-left: 0;
+        display: flex;
+        flex-direction: row; 
+        align-items: center; 
+        @media (max-width: 500px) {
+          // Switch to row layout for screens larger than 768px
+          margin-top: 0;
+          flex-direction: column;
+          justify-content: space-around;
+        }
+        .task-performance{
+            width: 35%;
+            height: 100%;
+            @media (max-width: 500px) {
+                // Adjust the breakpoint as needed
+                width: 100% !important; // Set to 50% for desktop
+              }
+        }
+        .task-line-chart{
+            width: 65%;
+            height: 100%;
+            border-radius: 5px;
+            @media (max-width: 500px) {
+                // Adjust the breakpoint as needed
+                width: 100% !important; // Set to 50% for desktop
+              }
+        }
+    }
+
+    .tasks-overview{
+        width: 100%;
+        height: 400px;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        .task-overview-title{
+            font-size: $heading2;
+        }
+        &::-webkit-scrollbar {
+            width: 8px;
+          }
+          &::-webkit-scrollbar-track {
+            border-radius: 10px;
+          }
+          &::-webkit-scrollbar-thumb {
+            background: $dark;
+            opacity: 0.6;
+            border-radius: 10px;
+          }
+          &::-webkit-scrollbar-thumb:hover {
+            background: $dark;
+            opacity: 0.9;
+          }
+
+        .tasks-wrapper{
+            background-color: $tertiary;
+            padding: 1rem;
+            border-radius: 8px;
+            padding-top: 3rem;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: row;
+            @media (max-width:500px){
+                display: flex;
+                flex-direction: column;
+                font-size: 10px !important;
+            }
+            .todo-list{
+            width: 30%;
+            min-height: 100px;
+            padding: 8px;
+            color: $dark;
+            background-color: $grey;
+            border-radius: 8px;
+            @media (max-width:500px){
+                width: 100%;
+                margin-bottom: 2%;
+            }
+            .todo-list-title{
+                font-weight: 700;
+            }
+            }
+        }
+    }
+}
+
+.task-update-btn{
+    color: $light;
+    background: $green;
+}
+.task-delete-btn{
+    color: $light;
+    background: $red;
+}
+.title{
+    font-size: $heading2;
+}
+
+.tms-btn{
+  
+        @include button-style;
+
+}
